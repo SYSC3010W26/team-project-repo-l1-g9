@@ -8,21 +8,22 @@
 
 ---
 
-1. **How many hours did you spend on the project this week?**
+1. ***How many hours did you spend on the project this week?***
 
-3 Hours
+   3 Hours
 
 
-2. **Give rough breakdown of hours spent on 1-3 of the following:***
+2. ***Give rough breakdown of hours spent on 1-3 of the following:***
 
-    *Meetings: * 1 Hour
-    *Information Gathering / Evaluating Options: * 2 Hours
+- **Meetings:** 1 Hour
+
+- **Information Gathering / Evaluating Options:** 2 Hours
 
 
 3. ***What did you accomplish this week?*** _(Be specific)_
 
-    Collaborated with the team to move away from the original autonomous rover concept. We finalized a more feasible "Greenhouse Monitoring System" featuring automated feedback loops for environmental control.
-    Participated in group discussions to define project roles and responsibilities for each member.
+- Collaborated with the team to move away from the original autonomous rover concept. We finalized a more feasible "Greenhouse Monitoring System" featuring automated feedback loops for environmental control.
+- Participated in group discussions to define project roles and responsibilities for each member.
 
 
 4. ***How do you feel about your progress?*** _(brief, free-form reflection)_
@@ -34,9 +35,9 @@
 
   - Carefully review the Technical Requirements to ensure the greenhouse system meets all necessary complexity standards.
 
-  - Work with the team to complete the draft Project Proposal by the Jan 23 deadline.
+  - Work with the team to complete the draft Project Proposal by the Jan 27 deadline.
 
-    Begin looking into the basic UML diagrams required for the proposal.
+  - Begin looking into the basic UML diagrams required for the proposal.
 
 
 6. ***Is anything blocking you that you need from others?*** _(What do you need from whom)_
