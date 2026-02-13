@@ -6,7 +6,7 @@ Week: Week 4 (Feb 04 – Feb 06)
 1. How many hours did you spend on the project this week?
 5 hours
 
-2.Breakdown of hours spent:
+2. Breakdown of hours spent:
 Top item: Component verification and circuit planning – 2 hours
 2nd item: Software logic preparation and documentation updates – 3 hours
 
@@ -24,7 +24,7 @@ Top item: Component verification and circuit planning – 2 hours
 -Although we are currently waiting for the ordered components to arrive, this time was used productively to prepare circuit designs and control logic in advance.
 -This preparation will allow for faster implementation once the hardware is available.
 
-6. What are you planning to do next week?
+5. What are you planning to do next week?
 
 -Begin physical hardware assembly once components arrive.
 -Test soil moisture sensor readings on the Raspberry Pi.
