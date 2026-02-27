@@ -2,7 +2,7 @@ Weekly Individual Project Update Report
 
 Group number: L1-G9
 Student name: Karthikeyan Bhavani Shankar
-Week: Week 5 (February 18th – February 24th)
+Week: Week 5 (Feb 18th – Feb 20th)
 
 1. How many hours did you spend on the project this week?
 
