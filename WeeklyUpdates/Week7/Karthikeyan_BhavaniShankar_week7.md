@@ -10,10 +10,10 @@ Week: Week 5 (Feb 18th – Feb 20th)
 
 2. Breakdown of hours spent:
 
-   Top item: Documentation and detailed design preparation – 3 hours
-   2nd item: System architecture refinement and diagram development – 3 hours
+Top item: Documentation and detailed design preparation – 3 hours
+2nd item: System architecture refinement and diagram development – 3 hours
 
-3. What did you accomplish this week? 
+4. What did you accomplish this week? 
 
    - Completed the Detailed Design document sections, including Software Design, Hardware Design, GUI Design, and Test Plans.
 
@@ -25,11 +25,11 @@ Week: Week 5 (Feb 18th – Feb 20th)
 
    - Verified that the project milestones and work plan align with the current semester timeline.
 
-4. How do you feel about your progress?
+5. How do you feel about your progress?
 
    I feel confident about the overall direction of the project. Although we are currently waiting for hardware components to arrive, significant progress has been made in documentation, system architecture refinement, and planning. The design is now clearly structured, and the control logic and testing procedures are well-defined. This preparation will allow for efficient implementation once the hardware becomes available.
 
-5. What are you planning to do next week?
+6. What are you planning to do next week?
 
    - Begin hardware assembly once components arrive.
 
@@ -41,6 +41,6 @@ Week: Week 5 (Feb 18th – Feb 20th)
  
    - Validate threshold-based automation logic under simulated conditions.
 
-6. Is anything blocking you that you need from others?
+7. Is anything blocking you that you need from others?
 
     The only current blocker is the arrival of ordered hardware components. Once they are delivered, full system integration and physical testing can proceed as planned.
