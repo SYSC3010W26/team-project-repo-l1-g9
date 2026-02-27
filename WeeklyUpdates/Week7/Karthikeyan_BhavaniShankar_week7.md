@@ -6,7 +6,7 @@ Week: Week 5 (Feb 18th – Feb 20th)
 
 1. How many hours did you spend on the project this week?
 
-    6 hours
+   - 6 hours
 
 2. Breakdown of hours spent:
 
