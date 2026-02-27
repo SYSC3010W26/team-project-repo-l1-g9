@@ -28,7 +28,11 @@ Week: Week 5 (Feb 18th – Feb 20th)
 
 5. How do you feel about your progress?
 
-   I feel confident about the overall direction of the project. Although we are currently waiting for hardware components to arrive, significant progress has been made in documentation, system architecture refinement, and planning. The design is now clearly structured, and the control logic and testing procedures are well-defined. This preparation will allow for efficient implementation once the hardware becomes available.
+   - I feel confident about the overall direction of the project.
+     
+   - Although we are currently waiting for hardware components to arrive, significant progress has been made in documentation, system architecture refinement, and planning.
+     
+   - The design is now clearly structured, and the control logic and testing procedures are well-defined. This preparation will allow for efficient implementation once the hardware becomes available.
 
 6. What are you planning to do next week?
 
