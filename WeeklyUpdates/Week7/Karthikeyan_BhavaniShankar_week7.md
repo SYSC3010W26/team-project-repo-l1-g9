@@ -10,8 +10,9 @@ Week: Week 5 (Feb 18th – Feb 20th)
 
 2. Breakdown of hours spent:
 
-Top item: Documentation and detailed design preparation – 3 hours
-2nd item: System architecture refinement and diagram development – 3 hours
+   - Top item: Documentation and detailed design preparation – 3 hours
+   
+   - 2nd item: System architecture refinement and diagram development – 3 hours
 
 4. What did you accomplish this week? 
 
