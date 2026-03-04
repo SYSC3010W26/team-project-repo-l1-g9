@@ -7,13 +7,17 @@ if not DB:
 PATH = "/commands/override.json"
 state = False
 
-while True:
+N = 10
+success = 0
+state = False
+
+for i in range(N):
     state = not state
-    payload = {
-        "ts": time.time(),
-        "pump_enable": state,
-        "source": "gui_stub"
-    }
+    payload = {"ts": time.time(), "pump_enable": state, "source": "gui_stub"}
     r = requests.put(DB + PATH, json=payload, timeout=5)
-    print("GUI -> Firebase:", r.status_code, payload)
-    time.sleep(5)
+    ok = (r.status_code == 200)
+    success += 1 if ok else 0
+    print(f"GUI -> Firebase [{i+1}/{N}]: {r.status_code}", payload)
+    time.sleep(2)
+
+print(f"\nSUMMARY: sent={N}, success={success}, fail={N-success}")
