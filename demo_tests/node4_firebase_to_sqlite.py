@@ -1,6 +1,7 @@
 import os, time, sqlite3, requests
 
 DB = os.environ.get("FIREBASE_DB_URL")
+PATH = "/nodes/node1/climate.json"
 if not DB:
     raise SystemExit("Missing FIREBASE_DB_URL")
 
