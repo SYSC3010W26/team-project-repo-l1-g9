@@ -10,7 +10,12 @@ N = 10
 success = 0
 
 for i in range(N):
-    payload = make_payload_somehow()  # keep your existing payload creation
+    payload = {
+    "ts": time.time(),
+    "temperature_c": round(random.uniform(22.0, 26.0), 2),
+    "humidity_pct": round(random.uniform(40.0, 60.0), 2),
+    "source": "node1_stub"
+}
     r = requests.put(DB + PATH, json=payload, timeout=5)
     ok = (r.status_code == 200)
     success += 1 if ok else 0
