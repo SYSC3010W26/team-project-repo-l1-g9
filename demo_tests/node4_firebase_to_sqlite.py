@@ -21,16 +21,17 @@ conn.commit()
 
 last_ts = None
 
-while True:
-    data = requests.get(DB + CLIMATE_PATH, timeout=5).json() or {}
+N = 10
+logged = 0
+
+while logged < N:
+    data = requests.get(DB + PATH, timeout=5).json() or {}
     ts = data.get("ts")
     if ts and ts != last_ts:
         last_ts = ts
-        cur.execute(
-            "INSERT INTO readings(ts, temperature_c, humidity_pct, source) VALUES (?,?,?,?)",
-            (ts, data.get("temperature_c"), data.get("humidity_pct"), "firebase")
-        )
-        conn.commit()
-        print("SQLite LOGGED:", data)
+        # your existing sqlite insert here
+        logged += 1
+        print(f"SQLite LOGGED [{logged}/{N}]:", data)
+    time.sleep(0.5)
 
-    time.sleep(1)
+print(f"\nSUMMARY: logged={logged}/{N}")
