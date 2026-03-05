@@ -1,0 +1,12 @@
+Step A: pull latest code
+cd ~/team-project-repo-l1-g9
+git pull
+Step B: create venv (only once)
+python3 -m venv .venv
+Step C: activate venv
+source .venv/bin/activate
+Step D: install packages
+pip install -r demo_tests/requirements.txt
+Step E: run the script
+source demo_tests/env.sh
+python3 demo_tests/node1_firebase_publish.py
