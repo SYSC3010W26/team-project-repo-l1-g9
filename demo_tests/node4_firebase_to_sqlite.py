@@ -27,12 +27,24 @@ logged = 0
 
 while logged < N:
     data = requests.get(DB + PATH, timeout=5).json() or {}
-    ts = data.get("ts")
-    if ts and ts != last_ts:
-        last_ts = ts
-        # your existing sqlite insert here
-        logged += 1
-        print(f"SQLite LOGGED [{logged}/{N}]:", data)
+    
+    for key, value in data.items():
+            ts = value.get("ts")
+            
+            # If it's a timestamp we haven't seen yet
+            if ts and ts != last_ts:
+                last_ts = ts
+                logged += 1
+                
+                # Insert into SQLite
+                cur.execute(
+                    "INSERT INTO readings (ts, temperature_c, humidity_pct, source) VALUES (?, ?, ?, ?)",
+                    (ts, value.get("temperature"), value.get("humidity"), "firebase")
+                )
+                conn.commit()
+                print(f"Captured {logged}/{N}: {value}")
+                
+                if logged >= N: break
     time.sleep(0.5)
 
 print(f"\nSUMMARY: logged={logged}/{N}")

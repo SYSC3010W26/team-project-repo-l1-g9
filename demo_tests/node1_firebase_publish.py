@@ -16,7 +16,7 @@ for i in range(N):
     "humidity_pct": round(random.uniform(40.0, 60.0), 2),
     "source": "node1_stub"
 }
-    r = requests.put(DB + PATH, json=payload, timeout=5)
+    r = requests.post(DB + PATH, json=payload, timeout=5)
     ok = (r.status_code == 200)
     success += 1 if ok else 0
     print(f"Node1 -> Firebase [{i+1}/{N}]: {r.status_code}", payload)
