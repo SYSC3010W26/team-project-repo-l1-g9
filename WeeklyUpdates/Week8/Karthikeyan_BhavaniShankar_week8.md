@@ -37,4 +37,5 @@ I feel confident about the progress this week. The core communication links requ
 - Begin transitioning from stub sensor data to real sensor readings once hardware is available, while keeping the same publish/subscribe architecture.
 
 6) Is anything blocking you that you need from others?
+   
 No major blockers. I need teammates to pull the latest repository changes and ensure their Python environment is set up so the demo scripts run consistently on their devices.
