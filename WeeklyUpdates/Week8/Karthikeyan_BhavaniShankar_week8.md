@@ -7,9 +7,9 @@ Week: (Feb 25th – Feb 28th)
 1) How many hours did you spend on the project this week?
 7 hours
 
-2) Breakdown of hours spent
-Top item: End-to-end communications demo setup and debugging (Firebase + scripts) – 4 hours
-2nd item: Testing, validation, and documentation updates (README + demo steps) – 3 hours
+2) Breakdown of hours spent:
+- Top item: End-to-end communications demo setup and debugging (Firebase + scripts) – 4 hours
+- 2nd item: Testing, validation, and documentation updates (README + demo steps) – 3 hours
 
 3) What did you accomplish this week? 
 
@@ -38,4 +38,4 @@ I feel confident about the progress this week. The core communication links requ
 
 6) Is anything blocking you that you need from others?
    
-No major blockers. I need teammates to pull the latest repository changes and ensure their Python environment is set up so the demo scripts run consistently on their devices.
+- No major blockers. I need teammates to pull the latest repository changes and ensure their Python environment is set up so the demo scripts run consistently on their devices.
