@@ -26,8 +26,7 @@ Weekly Individual Project Update Report
 - Updated the demo workflow notes so the team can run scripts in the correct order during the Thursday communications demo.
 
 4) How do you feel about your progress?
-- I feel confident about the progress this week.
-- The core communication links required for the demo are working and repeatable, and the data flow from cloud to local logging is clearly demonstrated.
+- I feel confident about the progress this week. The core communication links required for the demo are working and repeatable, and the data flow from cloud to local logging is clearly demonstrated.
 - The demo steps are now structured so that each team member can reliably show their communication link.
 
 6) What are you planning to do next week?
