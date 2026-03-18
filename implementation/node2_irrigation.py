@@ -27,6 +27,7 @@ while True:
         if cmd_req and "pump_enable" in cmd_req:
             print("MANUAL OVERRIDE ACTIVE from GUI")
             set_pump(cmd_req["pump_enable"])
+            time.sleep(10)
         else:
             # Automatic Logic based on fake moisture
             print(f"AUTO MODE -> Current Soil Moisture: {fake_moisture}%")
