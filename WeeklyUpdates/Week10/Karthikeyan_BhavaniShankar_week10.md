@@ -6,7 +6,7 @@ Weekly Individual Project Update Report
 
 1) How many hours did you spend on the project this week?
 
-9 hours
+-  9 hours
 
 2) Breakdown of hours spent:
    
