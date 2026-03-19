@@ -9,10 +9,10 @@ Weekly Individual Project Update Report
 9 hours
 
 2) Breakdown of hours spent:
+   
+-  Top item: Communication demo testing and debugging (Firebase RTDB, Node scripts, SQLite logging) – 5 hours
 
-Top item: Communication demo testing and debugging (Firebase RTDB, Node scripts, SQLite logging) – 5 hours
-
-2nd item: Detailed design document updates and unit test preparation – 4 hours
+-  2nd item: Detailed design document updates and unit test preparation – 4 hours
 
 3) What did you accomplish this week?
 
