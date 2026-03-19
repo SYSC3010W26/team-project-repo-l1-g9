@@ -50,4 +50,4 @@ Weekly Individual Project Update Report
 
 6) Is anything blocking you that you need from others?
 
-The biggest dependency right now is making sure all teammates finish and verify their assigned hardware-side unit tests before the demo. Since the software communication side is already working, the main risk is whether the physical sensor and actuator tests are fully ready and repeatable in time.
+- The biggest dependency right now is making sure all teammates finish and verify their assigned hardware-side unit tests before the demo. Since the software communication side is already working, the main risk is whether the physical sensor and actuator tests are fully ready and repeatable in time.
