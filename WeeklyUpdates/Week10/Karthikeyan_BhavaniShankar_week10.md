@@ -30,17 +30,7 @@ Weekly Individual Project Update Report
 
 - Helped debug communication issues related to Firebase path consistency, POST vs PUT behavior, and mixed data formats in the database.
 
-- Updated and refined major sections of the Detailed Design report, including:
-
--- communication protocols,
-
--- database schema,
-
--- software design sections for the four nodes,
-
--- test plan sections,
-
--- figure captions and activity diagram descriptions.
+- Updated and refined major sections of the Detailed Design report, including: communication protocols, database schema, software design sections for the four nodes, test plan sections, figure captions and activity diagram descriptions.
 
 - Began preparing for the unit test demo by identifying which existing software/database tests are already complete and which dedicated hardware tests still need to be added.
 
