@@ -276,6 +276,7 @@ body {
 
 .panel {
   padding: 20px;
+  margin-bottom: 20px;
 }
 
 .panel h2 {
@@ -342,6 +343,20 @@ body {
 
 .break-all {
   word-break: break-all;
+}
+
+.json-box {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #dfe9f3;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid #334251;
+  border-radius: 10px;
+  padding: 12px;
+  min-height: 110px;
 }
 
 @media (max-width: 1000px) {
