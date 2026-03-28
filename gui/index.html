@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Greenhouse Monitoring Dashboard</title>
+  <style>
+    :root{
+      --bg: #0f141b;
+      --sidebar: #151c24;
+      --sidebar-hover: #1d2631;
+      --panel: #121922;
+      --card: #1b2430;
+      --card-2: #202b38;
+      --border: #2d3a49;
+      --text: #eef4fb;
+      --muted: #a9b4c3;
+      --blue: #3e8ed8;
+      --green: #37a861;
+      --yellow: #d9a21b;
+      --red: #d9534f;
+      --cyan: #23b8d6;
+      --shadow: 0 8px 24px rgba(0,0,0,0.28);
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--sidebar);
+      border-right: 1px solid var(--border);
+      padding: 22px 16px;
+    }
+
+    .brand {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 26px;
+      color: white;
+      letter-spacing: 0.3px;
+    }
+
+    .brand span {
+      color: var(--cyan);
+    }
+
+    .nav-title {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin: 18px 10px 8px;
+    }
+
+    .nav-item {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      color: var(--text);
+      border: none;
+      padding: 12px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-bottom: 8px;
+      font-size: 0.97rem;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .nav-item.active {
+      background: linear-gradient(90deg, var(--blue), #59a7ea);
+      color: white;
+    }
+
+    .nav-item:not(.active):hover {
+      background: var(--sidebar-hover);
+    }
+
+    .content {
+      padding: 28px 28px 32px;
+      background:
+        radial-gradient(circle at top right, rgba(62,142,216,0.10), transparent 22%),
+        radial-gradient(circle at bottom left, rgba(35,184,214,0.08), transparent 20%),
+        var(--bg);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .heading h1 {
+      margin: 0 0 8px;
+      font-size: 2.35rem;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+
+    .heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .badge {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    .dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 8px;
+      background: #777;
+    }
+
+    .dot.ok { background: var(--green); }
+    .dot.err { background: var(--red); }
+
+    .hidden {
+      display: none;
+    }
+
+    .tab-section {
+      animation: fadeIn 0.18s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(280px, 1fr));
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, var(--card), var(--card-2));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .card-header {
+      padding: 14px 18px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: white;
+    }
+
+    .header-blue { background: linear-gradient(90deg, #4e9de7, #69b3f0); }
+    .header-yellow { background: linear-gradient(90deg, #d69419, #efaa29); }
+    .header-gray { background: linear-gradient(90deg, #6c7583, #8f99a8); }
+    .header-cyan { background: linear-gradient(90deg, #1c9ab3, #39c4dd); }
+
+    .card-body {
+      padding: 26px 22px 20px;
+      text-align: center;
+    }
+
+    .value {
+      font-size: 3.7rem;
+      font-weight: 800;
+      margin: 12px 0 20px;
+      color: white;
+    }
+
+    .value .unit {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-left: 4px;
+      color: #dfe9f3;
+    }
+
+    .status-pill {
+      display: inline-block;
+      min-width: 82%;
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-weight: 800;
+      font-size: 1rem;
+      color: white;
+    }
+
+    .optimal { background: var(--green); }
+    .warning { background: var(--yellow); }
+    .critical { background: var(--red); }
+
+    .pump-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin: 22px 0 18px;
+    }
+
+    .switch {
+      position: relative;
+      width: 74px;
+      height: 38px;
+      display: inline-block;
+    }
+
+    .switch input {
+      display: none;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: #58616f;
+      border-radius: 999px;
+      transition: 0.2s ease;
+    }
+
+    .slider::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      left: 4px;
+      top: 4px;
+      border-radius: 50%;
+      background: white;
+      transition: 0.2s ease;
+    }
+
+    .switch input:checked + .slider {
+      background: var(--green);
+    }
+
+    .switch input:checked + .slider::before {
+      transform: translateX(36px);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 16px 18px;
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: white;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
+
+    .btn-on {
+      background: linear-gradient(90deg, #2f9f5a, #47b86d);
+    }
+
+    .btn-off {
+      background: linear-gradient(90deg, #cb4545, #e15a5a);
+    }
+
+    .bottom-panel {
+      background: linear-gradient(180deg, var(--card), var(--card-2));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .bottom-panel h2 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+    }
+
+    .message {
+      min-height: 24px;
+      color: #74b7ff;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .details {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .detail-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid #334251;
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .detail-label {
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 6px;
+    }
+
+    .detail-value {
+      font-weight: 800;
+      color: white;
+    }
+
+    .single-panel {
+      background: linear-gradient(180deg, var(--card), var(--card-2));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .single-panel h2 {
+      margin: 0 0 14px;
+      font-size: 1.3rem;
+    }
+
+    .single-panel p {
+      color: var(--muted);
+      margin-top: 0;
+    }
+
+    .large-stat {
+      font-size: 2.6rem;
+      font-weight: 800;
+      margin: 14px 0;
+    }
+
+    .placeholder-box {
+      border: 1px dashed #48607a;
+      border-radius: 14px;
+      padding: 30px;
+      text-align: center;
+      color: var(--muted);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .log-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .log-entry {
+      border: 1px solid #334251;
+      background: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .log-entry strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 1000px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .grid,
+      .controls,
+      .details {
+        grid-template-columns: 1fr;
+      }
+
+      .heading h1 {
+        font-size: 1.8rem;
+      }
+
+      .value {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><span>Greenhouse</span> OS</div>
+
+      <div class="nav-title">Navigation</div>
+      <button class="nav-item active" data-tab="dashboard">Dashboard</button>
+      <button class="nav-item" data-tab="climate">Climate Monitor</button>
+      <button class="nav-item" data-tab="irrigation">Irrigation</button>
+      <button class="nav-item" data-tab="health">Health Monitor</button>
+      <button class="nav-item" data-tab="logs">Logs / Status</button>
+
+      <div class="nav-title">Controls</div>
+      <button class="nav-item" data-tab="override">Pump Override</button>
+      <button class="nav-item" data-tab="firebase">Firebase Status</button>
+    </aside>
+
+    <main class="content">
+      <div class="topbar">
+        <div class="heading">
+          <h1>Greenhouse Monitoring Dashboard</h1>
+          <p>Realtime Firebase-based control and monitoring interface for the automated greenhouse system.</p>
+        </div>
+
+        <div class="badges">
+          <div class="badge"><span class="dot" id="connDot"></span><span id="connText">Connecting...</span></div>
+          <div class="badge">Last Updated: <span id="lastUpdated">--</span></div>
+          <div class="badge">Source: <span id="sourceInfo">--</span></div>
+        </div>
+      </div>
+
+      <!-- DASHBOARD TAB -->
+      <section id="tab-dashboard" class="tab-section">
+        <div class="grid">
+          <div class="card">
+            <div class="card-header header-blue">Temperature (°C)</div>
+            <div class="card-body">
+              <div class="value" id="tempValue">--<span class="unit">°C</span></div>
+              <div class="status-pill optimal" id="tempStatus">Status: Loading</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header header-blue">Humidity (%)</div>
+            <div class="card-body">
+              <div class="value" id="humValue">--<span class="unit">%</span></div>
+              <div class="status-pill optimal" id="humStatus">Status: Loading</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header header-yellow">Soil Moisture (%)</div>
+            <div class="card-body">
+              <div class="value" id="soilValue">--<span class="unit">%</span></div>
+              <div class="status-pill warning" id="soilStatus">Status: Waiting for Node 2</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header header-gray">Pump Status</div>
+            <div class="card-body">
+              <div class="pump-row">
+                <span>ON</span>
+                <label class="switch">
+                  <input type="checkbox" id="pumpToggle" disabled>
+                  <span class="slider"></span>
+                </label>
+                <span>OFF</span>
+              </div>
+              <div class="status-pill warning" id="pumpStatusText">Checking system...</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button class="btn btn-on" onclick="sendOverride(true)">Manual Override Pump ON</button>
+          <button class="btn btn-off" onclick="sendOverride(false)">Manual Override Pump OFF</button>
+        </div>
+
+        <section class="bottom-panel">
+          <h2>System / Debug Info</h2>
+          <div class="message" id="messageBox">Dashboard started.</div>
+
+          <div class="details">
+            <div class="detail-card">
+              <div class="detail-label">Latest Climate Timestamp</div>
+              <div class="detail-value" id="climateTs">--</div>
+            </div>
+
+            <div class="detail-card">
+              <div class="detail-label">Latest Irrigation Timestamp</div>
+              <div class="detail-value" id="irrigationTs">--</div>
+            </div>
+
+            <div class="detail-card">
+              <div class="detail-label">Latest Override Source</div>
+              <div class="detail-value" id="overrideSource">--</div>
+            </div>
+
+            <div class="detail-card">
+              <div class="detail-label">Current Override State</div>
+              <div class="detail-value" id="overrideState">--</div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- CLIMATE TAB -->
+      <section id="tab-climate" class="tab-section hidden">
+        <div class="single-panel">
+          <h2>Climate Monitor</h2>
+          <p>This section shows the latest Node 1 climate data being read from Firebase.</p>
+          <div class="grid">
+            <div class="card">
+              <div class="card-header header-blue">Temperature</div>
+              <div class="card-body">
+                <div class="large-stat" id="climateTempDetail">-- °C</div>
+                <div class="status-pill optimal" id="climateTempDetailStatus">Status: Loading</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header header-blue">Humidity</div>
+              <div class="card-body">
+                <div class="large-stat" id="climateHumDetail">-- %</div>
+                <div class="status-pill optimal" id="climateHumDetailStatus">Status: Loading</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- IRRIGATION TAB -->
+      <section id="tab-irrigation" class="tab-section hidden">
+        <div class="single-panel">
+          <h2>Irrigation</h2>
+          <p>This section tracks the latest Node 2 irrigation data and current pump state.</p>
+          <div class="grid">
+            <div class="card">
+              <div class="card-header header-yellow">Soil Moisture</div>
+              <div class="card-body">
+                <div class="large-stat" id="irrigationSoilDetail">-- %</div>
+                <div class="status-pill warning" id="irrigationSoilStatus">Status: Waiting for Node 2</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header header-gray">Pump Output</div>
+              <div class="card-body">
+                <div class="large-stat" id="irrigationPumpDetail">--</div>
+                <div class="status-pill warning" id="irrigationPumpStatus">Checking system...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HEALTH TAB -->
+      <section id="tab-health" class="tab-section hidden">
+        <div class="single-panel">
+          <h2>Health Monitor</h2>
+          <p>This section is intended for Node 3 data such as light level and camera/health monitoring.</p>
+          <div class="grid">
+            <div class="card">
+              <div class="card-header header-cyan">Light Level</div>
+              <div class="card-body">
+                <div class="large-stat" id="lightLevelValue">--</div>
+                <div class="status-pill warning" id="lightLevelStatus">Status: Waiting for Node 3</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header header-gray">Camera / Health Status</div>
+              <div class="card-body">
+                <div class="placeholder-box">
+                  Camera preview / health image placeholder<br>
+                  Add Node 3 camera image support here later.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LOGS TAB -->
+      <section id="tab-logs" class="tab-section hidden">
+        <div class="single-panel">
+          <h2>Logs / Status</h2>
+          <p>Quick system-state summary from the most recent dashboard refresh.</p>
+          <div class="log-list">
+            <div class="log-entry">
+              <strong>Latest Dashboard Message</strong>
+              <span id="logsMessageMirror">Dashboard started.</span>
+            </div>
+            <div class="log-entry">
+              <strong>Connection</strong>
+              <span id="logsConnectionMirror">Connecting...</span>
+            </div>
+            <div class="log-entry">
+              <strong>Last Updated</strong>
+              <span id="logsUpdatedMirror">--</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- OVERRIDE TAB -->
+      <section id="tab-override" class="tab-section hidden">
+        <div class="single-panel">
+          <h2>Pump Override</h2>
+          <p>Use these controls to write manual pump commands to Firebase.</p>
+          <div class="controls">
+            <button class="btn btn-on" onclick="sendOverride(true)">Manual Override Pump ON</button>
+            <button class="btn btn-off" onclick="sendOverride(false)">Manual Override Pump OFF</button>
+          </div>
+          <div class="detail-card">
+            <div class="detail-label">Latest Override State</div>
+            <div class="detail-value" id="overrideStateMirror">--</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FIREBASE TAB -->
+      <section id="tab-firebase" class="tab-section hidden">
+        <div class="single-panel">
+          <h2>Firebase Status</h2>
+          <p>Live backend status and configuration summary for the dashboard.</p>
+          <div class="details">
+            <div class="detail-card">
+              <div class="detail-label">Database URL</div>
+              <div class="detail-value" style="word-break: break-all;">
+                https://sysc3010-l1-g9-demo-default-rtdb.firebaseio.com
+              </div>
+            </div>
+            <div class="detail-card">
+              <div class="detail-label">Connection</div>
+              <div class="detail-value" id="firebaseConnMirror">Connecting...</div>
+            </div>
+            <div class="detail-card">
+              <div class="detail-label">Latest Climate Source</div>
+              <div class="detail-value" id="firebaseSourceMirror">--</div>
+            </div>
+            <div class="detail-card">
+              <div class="detail-label">Latest Refresh Time</div>
+              <div class="detail-value" id="firebaseRefreshMirror">--</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const FIREBASE_URL = "https://sysc3010-l1-g9-demo-default-rtdb.firebaseio.com";
+
+    function latestChild(obj) {
+      if (!obj || typeof obj !== "object") return null;
+      const keys = Object.keys(obj);
+      if (keys.length === 0) return null;
+      const lastKey = keys[keys.length - 1];
+      return obj[lastKey];
+    }
+
+    function formatUnixTs(ts) {
+      if (!ts) return "--";
+      const d = new Date(Number(ts) * 1000);
+      return d.toLocaleString();
+    }
+
+    function setConnection(ok, text) {
+      const dot = document.getElementById("connDot");
+      const textEl = document.getElementById("connText");
+      dot.className = "dot " + (ok ? "ok" : "err");
+      textEl.textContent = text;
+
+      document.getElementById("logsConnectionMirror").textContent = text;
+      document.getElementById("firebaseConnMirror").textContent = text;
+    }
+
+    function setStatus(el, text, cls) {
+      el.textContent = text;
+      el.className = "status-pill " + cls;
+    }
+
+    function tempStatus(temp) {
+      if (temp == null) return ["Status: No Data", "critical"];
+      if (temp > 35) return ["Status: Critical", "critical"];
+      if (temp > 28) return ["Status: Warning", "warning"];
+      return ["Status: Optimal", "optimal"];
+    }
+
+    function humidityStatus(h) {
+      if (h == null) return ["Status: No Data", "critical"];
+      if (h < 30 || h > 80) return ["Status: Warning", "warning"];
+      return ["Status: Optimal", "optimal"];
+    }
+
+    function soilStatus(m) {
+      if (m == null) return ["Status: Waiting for Node 2", "critical"];
+      if (m < 30) return ["Status: Critical", "critical"];
+      if (m < 45) return ["Status: Warning", "warning"];
+      return ["Status: Optimal", "optimal"];
+    }
+
+    async function fetchJson(path) {
+      const res = await fetch(`${FIREBASE_URL}${path}.json`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.json();
+    }
+
+    async function refreshDashboard() {
+      try {
+        const [climateData, irrigationData, overrideData, healthData] = await Promise.all([
+          fetchJson("/nodes/node1/climate"),
+          fetchJson("/nodes/node2/irrigation"),
+          fetchJson("/commands/override"),
+          fetchJson("/nodes/node3/health")
+        ]);
+
+        const climate = latestChild(climateData);
+        const irrigation = latestChild(irrigationData);
+        const health = latestChild(healthData);
+
+        // Temperature
+        const temp = climate?.temperature_c ?? null;
+        document.getElementById("tempValue").innerHTML =
+          temp != null ? `${Number(temp).toFixed(1)}<span class="unit">°C</span>` : `--<span class="unit">°C</span>`;
+        const [tempLabel, tempClass] = tempStatus(temp);
+        setStatus(document.getElementById("tempStatus"), tempLabel, tempClass);
+
+        document.getElementById("climateTempDetail").textContent =
+          temp != null ? `${Number(temp).toFixed(1)} °C` : "-- °C";
+        setStatus(document.getElementById("climateTempDetailStatus"), tempLabel, tempClass);
+
+        // Humidity
+        const hum = climate?.humidity_pct ?? null;
+        document.getElementById("humValue").innerHTML =
+          hum != null ? `${Math.round(Number(hum))}<span class="unit">%</span>` : `--<span class="unit">%</span>`;
+        const [humLabel, humClass] = humidityStatus(hum);
+        setStatus(document.getElementById("humStatus"), humLabel, humClass);
+
+        document.getElementById("climateHumDetail").textContent =
+          hum != null ? `${Math.round(Number(hum))} %` : "-- %";
+        setStatus(document.getElementById("climateHumDetailStatus"), humLabel, humClass);
+
+        // Soil Moisture
+        const soil = irrigation?.soil_moisture_pct ?? null;
+        document.getElementById("soilValue").innerHTML =
+          soil != null ? `${Math.round(Number(soil))}<span class="unit">%</span>` : `--<span class="unit">%</span>`;
+        const [soilLabel, soilClass] = soilStatus(soil);
+        setStatus(document.getElementById("soilStatus"), soilLabel, soilClass);
+
+        document.getElementById("irrigationSoilDetail").textContent =
+          soil != null ? `${Math.round(Number(soil))} %` : "-- %";
+        setStatus(document.getElementById("irrigationSoilStatus"), soilLabel, soilClass);
+
+        // Pump
+        let pumpOn = false;
+        if (irrigation && typeof irrigation.pump_status === "string") {
+          pumpOn = irrigation.pump_status.toUpperCase() === "ON";
+        } else if (overrideData && typeof overrideData.pump_enable === "boolean") {
+          pumpOn = overrideData.pump_enable;
+        }
+
+        document.getElementById("pumpToggle").checked = pumpOn;
+        setStatus(
+          document.getElementById("pumpStatusText"),
+          pumpOn ? "Irrigation System Active" : "Irrigation System Inactive",
+          pumpOn ? "optimal" : "warning"
+        );
+
+        document.getElementById("irrigationPumpDetail").textContent = pumpOn ? "Pump ON" : "Pump OFF";
+        setStatus(
+          document.getElementById("irrigationPumpStatus"),
+          pumpOn ? "Commanded ON" : "Commanded OFF",
+          pumpOn ? "optimal" : "warning"
+        );
+
+        // Health / Node 3
+        const light = health?.light_level ?? null;
+        document.getElementById("lightLevelValue").textContent =
+          light != null ? `${light}` : "--";
+        setStatus(
+          document.getElementById("lightLevelStatus"),
+          light != null ? "Status: Node 3 Data Available" : "Status: Waiting for Node 3",
+          light != null ? "optimal" : "warning"
+        );
+
+        // Bottom info
+        const nowStr = new Date().toLocaleTimeString();
+        const source = climate?.source || irrigation?.source || overrideData?.source || "--";
+
+        document.getElementById("lastUpdated").textContent = nowStr;
+        document.getElementById("sourceInfo").textContent = source;
+
+        document.getElementById("climateTs").textContent = formatUnixTs(climate?.ts);
+        document.getElementById("irrigationTs").textContent = formatUnixTs(irrigation?.ts);
+        document.getElementById("overrideSource").textContent = overrideData?.source || "--";
+        document.getElementById("overrideState").textContent =
+          typeof overrideData?.pump_enable === "boolean"
+            ? (overrideData.pump_enable ? "Pump ON" : "Pump OFF")
+            : "--";
+
+        document.getElementById("overrideStateMirror").textContent =
+          typeof overrideData?.pump_enable === "boolean"
+            ? (overrideData.pump_enable ? "Pump ON" : "Pump OFF")
+            : "--";
+
+        document.getElementById("logsUpdatedMirror").textContent = nowStr;
+        document.getElementById("firebaseRefreshMirror").textContent = nowStr;
+        document.getElementById("firebaseSourceMirror").textContent = source;
+
+        const msg = "Dashboard updated successfully.";
+        document.getElementById("messageBox").textContent = msg;
+        document.getElementById("logsMessageMirror").textContent = msg;
+
+        setConnection(true, "Connected to Firebase");
+      } catch (err) {
+        const msg = "Dashboard refresh error: " + err.message;
+        document.getElementById("messageBox").textContent = msg;
+        document.getElementById("logsMessageMirror").textContent = msg;
+        setConnection(false, "Firebase connection error");
+      }
+    }
+
+    async function sendOverride(state) {
+      const messageBox = document.getElementById("messageBox");
+      messageBox.textContent = "Sending override command...";
+      document.getElementById("logsMessageMirror").textContent = "Sending override command...";
+
+      const payload = {
+        ts: Math.floor(Date.now() / 1000),
+        pump_enable: state,
+        source: "gui_operator"
+      };
+
+      try {
+        const res = await fetch(`${FIREBASE_URL}/commands/override.json`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const msg = `Success: Pump commanded ${state ? "ON" : "OFF"}.`;
+        document.getElementById("messageBox").textContent = msg;
+        document.getElementById("logsMessageMirror").textContent = msg;
+        await refreshDashboard();
+      } catch (err) {
+        const msg = "Error sending command: " + err.message;
+        document.getElementById("messageBox").textContent = msg;
+        document.getElementById("logsMessageMirror").textContent = msg;
+      }
+    }
+
+    function setupTabs() {
+      const buttons = document.querySelectorAll(".nav-item[data-tab]");
+      const sections = document.querySelectorAll(".tab-section");
+
+      buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const target = btn.dataset.tab;
+
+          buttons.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          sections.forEach(sec => sec.classList.add("hidden"));
+          document.getElementById(`tab-${target}`).classList.remove("hidden");
+        });
+      });
+    }
+
+    setupTabs();
+    refreshDashboard();
+    setInterval(refreshDashboard, 3000);
+  </script>
+</body>
+</html>
