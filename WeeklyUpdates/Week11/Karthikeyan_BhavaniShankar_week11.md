@@ -42,4 +42,6 @@ Week: Week 11
 
 6) Is anything blocking you that you need from others?
 
-The main blocker is still hardware readiness and incomplete integration of some physical components, especially for parts of the irrigation sensing path. I also need the team to agree on final code/report contribution breakdowns so that the final report can be completed accurately.
+- The main blocker is still hardware readiness and incomplete integration of some physical components, especially for parts of the irrigation sensing path.
+
+-  I also need the team to agree on final code/report contribution breakdowns so that the final report can be completed accurately.
