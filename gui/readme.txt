@@ -1,7 +1,7 @@
-In PowerShell on Windows, use:
+#GUI INSTRUCTIONS:
 
-python -m http.server 8000
+1) Download all 3 files under a folder named gui
 
-Then open:
+2)In PowerShell on Windows, use: python -m http.server 8000
 
-http://localhost:8000
+3)Then open: http://localhost:8000
