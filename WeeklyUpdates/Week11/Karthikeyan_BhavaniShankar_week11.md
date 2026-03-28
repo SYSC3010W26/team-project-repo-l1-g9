@@ -6,12 +6,13 @@ Week: Week 11
 
 1) How many hours did you spend on the project this week?
 
-8 hours
+- 8 hours
 
 2) Breakdown of hours spent:
 
-Top item: Software/database unit test preparation and validation – 4 hours
-2nd item: Final report planning, documentation updates, and contribution to design cleanup – 4 hours
+- Top item: Software/database unit test preparation and validation – 4 hours
+
+- 2nd item: Final report planning, documentation updates, and contribution to design cleanup – 4 hours
 
 3) What did you accomplish this week?
 
