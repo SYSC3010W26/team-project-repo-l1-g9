@@ -6,7 +6,7 @@
 * Karthikeyan Bhavani Shankar
 * Chikezilim Afulukwe
 
-**TA:** Gabriel Seyoum | **Course:** SYSC 3010
+**TA:** Afsoon Khodaee | **Course:** SYSC 3010
 
 ## Project Summary
 This project is a distributed, Internet of Things (IoT) automated greenhouse system. It utilizes four independent Raspberry Pi edge nodes that communicate asynchronously via a Firebase Realtime Database. The system is designed to reduce the manual labor of greenhouse farming by continuously monitoring temperature, humidity, soil moisture, and light levels. Node 1 controls a 12V cooling fan based on temperature thresholds. Node 2 utilizes an Arduino coprocessor to monitor soil moisture and controls a 12V peristaltic irrigation pump. Node 3 monitors plant health via a camera. Finally, Node 4 acts as the central data historian, logging all cloud telemetry into a local SQLite database and hosting a Web GUI that allows users to view live charts and issue remote manual override commands to the actuators.
